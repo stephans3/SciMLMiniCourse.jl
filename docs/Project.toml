@@ -1,0 +1,3 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+SciMLMiniCourse = "e142e7c2-b473-410e-9fa9-8ea67e1e704d"
