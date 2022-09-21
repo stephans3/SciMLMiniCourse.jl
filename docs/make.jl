@@ -16,10 +16,13 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
+        "Quick Julia introduction" => "intro_julia.md",
+        "Differential Equations" => "diff_eq.md",
     ],
 )
 
+#=
 deploydocs(;
     repo="github.com/stephans3/SciMLMiniCourse.jl",
     devbranch="main",
-)
+)=#
