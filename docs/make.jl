@@ -18,6 +18,11 @@ makedocs(;
         "Home" => "index.md",
         "Quick Julia introduction" => "intro_julia.md",
         "Differential Equations" => "diff_eq.md",
+        "Homework: Day 1" => "homework_1.md",
+        "Artificial Neural Networks" => "art_neural_networks.md",
+        "Neural Differential Equaions" => "neural_ode.md",
+        "Homework: Day 2" => "homework_2.md",
+        "Projects" => "projects.md",
     ],
 )
 
