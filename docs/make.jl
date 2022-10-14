@@ -32,11 +32,11 @@ makedocs(;
     ],
 )
 
-#=
+
 deploydocs(;
     repo="github.com/stephans3/SciMLMiniCourse.jl.git",
     # repo="github.com/stephans3/SciMLMiniCourse.jl",
     # devbranch="main",
-)=#
+)
 
 
