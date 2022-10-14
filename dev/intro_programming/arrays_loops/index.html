@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Arrays and Loops · SciMLMiniCourse.jl</title><script data-outdated-warner src="../../assets/warner.js"></script><link rel="canonical" href="https://stephans3.github.io/SciMLMiniCourse.jl/intro_programming/arrays_loops/"/><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">SciMLMiniCourse.jl</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><span class="tocitem">Introduction to Julia programming</span><ul><li><a class="tocitem" href="../intro_julia/">Quick introduction</a></li><li class="is-active"><a class="tocitem" href>Arrays and Loops</a><ul class="internal"><li><a class="tocitem" href="#Zeros,-ones-and-random-values"><span>Zeros, ones and random values</span></a></li><li><a class="tocitem" href="#For-loops"><span>For-loops</span></a></li></ul></li><li><a class="tocitem" href="../num_integration_diff/">Numerical integration and differentiation</a></li><li><a class="tocitem" href="../finite_diff_2d/">Finite differences in 2 dimensions</a></li></ul></li><li><span class="tocitem">Basics of Scientific Machine Learning</span><ul><li><a class="tocitem" href="../../basics_sciml/diff_eq/">Differential Equations</a></li><li><a class="tocitem" href="../../basics_sciml/homework_1/">Homework: Differential Equations</a></li><li><a class="tocitem" href="../../basics_sciml/art_neural_networks/">Artificial Neural Networks</a></li><li><a class="tocitem" href="../../basics_sciml/neural_ode/">Neural Ordinary Differential Equations</a></li><li><a class="tocitem" href="../../basics_sciml/homework_2/">Homework: Machine Learning</a></li></ul></li><li><a class="tocitem" href="../../projects/">Projects</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Introduction to Julia programming</a></li><li class="is-active"><a href>Arrays and Loops</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Arrays and Loops</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/stephans3/SciMLMiniCourse.jl/blob/main/docs/src/intro_programming/arrays_loops.md#" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Arrays-and-Loops"><a class="docs-heading-anchor" href="#Arrays-and-Loops">Arrays and Loops</a><a id="Arrays-and-Loops-1"></a><a class="docs-heading-anchor-permalink" href="#Arrays-and-Loops" title="Permalink"></a></h1><p>Julia is made for scientific computation. So, we have <strong>Vectors</strong> and <strong>Matrices</strong> which are both subtypes of arrays. We can create a simple 4-element <code>Vector</code> with</p><pre><code class="language-julia hljs">julia&gt; v = [1,2,3,4]
+4-element Vector{Int64}:
+ 1
+ 2
+ 3
+ 4</code></pre><p>and see that all entries are saved as <code>Int64</code> which is a 64 bit integer. If we write one value as float then we yield a <code>Vector{Float64}</code> as</p><pre><code class="language-julia hljs">julia&gt; v = [1,2.0,3,4]
+4-element Vector{Float64}:
+ 1.0
+ 2.0
+ 3.0
+ 4.0</code></pre><p>In Julia vectors are noted as <strong>columns</strong> and not as rows. If we do not use the comma between the entries than we yield a matrix with one row as</p><pre><code class="language-julia hljs">julia&gt; v = [1 2 3 4]
+1×4 Matrix{Int64}:
+ 1  2  3  4</code></pre><p>In matrices each row is seperated with semicolons as</p><pre><code class="language-julia hljs">julia&gt; M = [1 2 3 4; 5 6 7 8]
+2×4 Matrix{Int64}:
+ 1  2  3  4
+ 2  3  4  5</code></pre><h2 id="Zeros,-ones-and-random-values"><a class="docs-heading-anchor" href="#Zeros,-ones-and-random-values">Zeros, ones and random values</a><a id="Zeros,-ones-and-random-values-1"></a><a class="docs-heading-anchor-permalink" href="#Zeros,-ones-and-random-values" title="Permalink"></a></h2><p>If you want to create a vector or a matrix that contains only <strong>zero entries</strong> then you can use for vectors</p><pre><code class="language-julia hljs">julia&gt; v = zeros(4)
+4-element Vector{Float64}:
+ 0.0
+ 0.0
+ 0.0
+ 0.0</code></pre><p>and for matrices</p><pre><code class="language-julia hljs">julia&gt; M = zeros(4,4)
+4×4 Matrix{Float64}:
+ 0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0
+ 0.0  0.0  0.0  0.0</code></pre><p>If we want to define the datatype then we use <code>zeros(TYPE,ROWS,COLUMNS)</code> as</p><pre><code class="language-julia hljs">julia&gt; M = zeros(Int,4,3)
+4×3 Matrix{Int64}:
+ 0  0  0
+ 0  0  0
+ 0  0  0
+ 0  0  0</code></pre><p>If we want to have a vector or matrix with only <strong>one entries</strong> then we use <code>ones(TYPE,ROWS,COLUMNS)</code> as</p><pre><code class="language-julia hljs">julia&gt; M = ones(Int,4,3)
+4×3 Matrix{Int64}:
+ 1  1  1
+ 1  1  1
+ 1  1  1
+ 1  1  1</code></pre><p>We can create <strong>random</strong> values the same way as before with <code>rand(TYPE,ROWS,COLUMNS)</code> as </p><pre><code class="language-julia hljs">julia&gt; M = rand(3,4)
+3×4 Matrix{Float64}:
+ 0.545932  0.272659  0.31695   0.707982
+ 0.246701  0.92546   0.878453  0.501426
+ 0.206801  0.659878  0.174388  0.0598787</code></pre><p>and with datatype as</p><pre><code class="language-julia hljs">julia&gt; M = rand(Bool, 3,4)
+3×4 Matrix{Bool}:
+ 1  0  0  0
+ 0  0  0  1
+ 1  0  1  1</code></pre><h2 id="For-loops"><a class="docs-heading-anchor" href="#For-loops">For-loops</a><a id="For-loops-1"></a><a class="docs-heading-anchor-permalink" href="#For-loops" title="Permalink"></a></h2><p>We can use <strong>while</strong> and <strong>for</strong> loops in Julia. While loops can be used as</p><pre><code class="language-julia hljs">n = 1;
+while n&lt;4
+    n = n+1;
+    println(n)
+end</code></pre><p>However, we will focus in this course only on for loops. There are several ways to define the iteration of the for loop. One way to rewrite the while loop above is </p><pre><code class="language-julia hljs">for n=1:3
+    n = n+1;
+    println(n)
+end</code></pre><p>or using the <code>in</code> statement we can write</p><pre><code class="language-julia hljs">for n in 1:3
+    n = n+1;
+    println(n)
+end</code></pre><p>This <code>in</code> statement will be used later at several points. </p><h3 id="Example:-finding-minimum-and-maximum"><a class="docs-heading-anchor" href="#Example:-finding-minimum-and-maximum">Example: finding minimum and maximum</a><a id="Example:-finding-minimum-and-maximum-1"></a><a class="docs-heading-anchor-permalink" href="#Example:-finding-minimum-and-maximum" title="Permalink"></a></h3><p>Firstly, we create a vector and fill it with some values.</p><pre><code class="language-julia hljs"># Vector
+v = [1, 3, 5, 7, 9, 0, 2, 4, 6, 8]
+N = length(v) # length of vector</code></pre><p>The entries can be printed with a for-loop as</p><pre><code class="language-julia hljs">for i=1:N
+    println(&quot;v[&quot;,i,&quot;]= &quot;, v[i])
+end</code></pre><p>or we can use the <code>enumerate</code> function that iterates over the whole vector and returns the index and the element as</p><pre><code class="language-julia hljs">for (idx,el) in enumerate(v)
+    println(&quot;At index &quot;, idx, &quot; the element is &quot;, el)
+end</code></pre><p>The maximum and minimum of the vector entries can be found with <code>maximum()</code> or <code>minimum()</code> as</p><pre><code class="language-julia hljs">println(&quot;Maximum of v is &quot;, maximum(v)) 
+println(&quot;Minimum of v is &quot;, minimum(v)) </code></pre><p>or manually with for-loops. Beside the maximum and minimum value we also want to find the indices of both values. Therefore, we declare 2 variable to store the values and 2 variables to store the indices.</p><pre><code class="language-julia hljs">    e_max, e_min = -Inf, Inf;   # Init min/max element
+    idx_max, idx_min = -1, -1;  # Init indices</code></pre><pre><code class="language-julia hljs">for (idx,e) in enumerate(v)
+    # Save recent element and index if it is _larger_ than the already stored one
+    if e &gt; e_max
+        e_max = e
+        idx_max = idx
+    end
+
+    # Save recent element and index if it is _smaller_ than the already stored one
+    if e &lt; e_min
+        e_min = e
+        idx_min = idx
+    end
+end</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../intro_julia/">« Quick introduction</a><a class="docs-footer-nextpage" href="../num_integration_diff/">Numerical integration and differentiation »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.23 on <span class="colophon-date" title="Friday 14 October 2022 08:33">Friday 14 October 2022</span>. Using Julia version 1.8.2.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
