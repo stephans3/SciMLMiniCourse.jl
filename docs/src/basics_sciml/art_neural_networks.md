@@ -168,6 +168,7 @@ Flux is one Julia's standard machine learning libraries. Beside Flux there exist
 - [MLJ](https://alan-turing-institute.github.io/MLJ.jl/dev/)
 - [Knet](https://denizyuret.github.io/Knet.jl/latest/)
 - [Lux](http://lux.csail.mit.edu/stable/)
+- [SimpleChains](https://github.com/PumasAI/SimpleChains.jl)
 
 In this course we will use **Flux** and **Lux**. Lux is a young project that was created to build a better foundation for Scientific Machine Learning methods than Flux. This means, the interoperability with **DifferentialEquations** framework shall be better than with Flux.
 

@@ -18,6 +18,23 @@ $\frac{dx(t)}{dt} = f(x(t), p,t)$
 
 and solve it with a high-order numerical integration method like Runge-Kutta methods. 
 
+## Neural ODE procedure
+
+1. Build the mathematical problem:
+    - Define the neural ODE $\dot{x}=f(x,t) + g(x,p,t)$ with initial states
+    - Design the machine learning methods, e.g. neural nets
+    - Choose an optimization method, e.g. ADAM, BFGS, etc.
+
+
+1. Generate true data from experiments, process data or simulations
+2. Build the grey-box model of the system
+    - known parts as differential equations
+    - unknown parts via parameters or ML tools, e.g. neural networks
+3. Create the loss function and callback
+4. Define used optimization methods and run optimization
+
+- Old blog entry with good explanation: [DiffEqFlux.jl – A Julia Library for Neural Differential Equations](https://julialang.org/blog/2019/01/fluxdiffeq/) 
+
 
 #### Literature
 - [Neural Ordinary Differential Equations](https://arxiv.org/abs/1806.07366)

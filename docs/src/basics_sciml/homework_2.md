@@ -1,4 +1,4 @@
-# Homework: Day 2
+# Homework: Machine Learning
 
 ## 2-dimensional function approximation
 

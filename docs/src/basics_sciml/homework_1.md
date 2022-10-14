@@ -1,4 +1,4 @@
-# Homework: Day 1
+# Homework: Differential Equations
 
 Read the DifferentialEquations.jl documentation about [Ordinary Differential Equations](https://diffeq.sciml.ai/stable/tutorials/ode_example/) and solve the following exercises.
 

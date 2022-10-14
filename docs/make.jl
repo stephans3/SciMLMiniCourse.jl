@@ -16,19 +16,27 @@ makedocs(;
     ),
     pages=[
         "Home" => "index.md",
-        "Quick Julia introduction" => "intro_julia.md",
-        "Differential Equations" => "diff_eq.md",
-        "Homework: Day 1" => "homework_1.md",
-        "Artificial Neural Networks" => "art_neural_networks.md",
-        "Neural Differential Equaions" => "neural_ode.md",
-        "Homework: Day 2" => "homework_2.md",
+        "Introduction to Julia programming" => Any[
+        "intro_programming/intro_julia.md",
+        "intro_programming/arrays_loops.md",
+        "intro_programming/num_integration_diff.md",
+        "intro_programming/finite_diff_2d.md"
+        ],
+        "Basics of Scientific Machine Learning" => [
+        "basics_sciml/diff_eq.md",
+        "basics_sciml/homework_1.md",
+        "basics_sciml/art_neural_networks.md",
+        "basics_sciml/neural_ode.md",
+        "basics_sciml/homework_2.md"],
         "Projects" => "projects.md",
     ],
 )
 
-
+#=
 deploydocs(;
     repo="github.com/stephans3/SciMLMiniCourse.jl.git",
     # repo="github.com/stephans3/SciMLMiniCourse.jl",
     # devbranch="main",
-)
+)=#
+
+
