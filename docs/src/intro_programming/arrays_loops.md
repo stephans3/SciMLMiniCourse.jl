@@ -173,3 +173,67 @@ for (idx,e) in enumerate(v)
     end
 end
 ``` 
+
+## Image processing
+As a simple example we will see you to 
+
+```julia
+using Images
+# This image is taken from: https://openmoji.org/ 
+# See: https://openmoji.org/library/emoji-1F34F/
+img_orig = load("images/1F34F_color.png")
+Npx, Npy = size(img_orig)
+
+noise_rgb  = rand(RGB,Npx, Npy)  # Noise as random matrix
+noise_gray = rand(Gray,Npx, Npy) # Noise as random matrix
+img_noisy  = img_orig+noise_rgb  # Image with RGB noise
+
+# Matrices with gray scale values
+P_orig = channelview(Gray.(img_orig)) + zeros(Npx, Npy)
+P_noisy = channelview(Gray.(img_noisy))  + zeros(Npx, Npy)
+
+using Plots
+heatmap(P_orig, title="Heatmap of original image")
+heatmap(P_noisy, title="Heatmap of image with noise")
+```
+
+Now we can modify the images.
+```julia
+P_mod = 0.5*P_noisy + P_noisy[end:-1:1,:]
+heatmap(P_mod, title="Modified noisy image")
+```
+
+We can also implement and apply [convolution](https://en.wikipedia.org/wiki/Convolution#Discrete_convolution).
+
+```julia
+function convolution_img(M)
+    Nx,Ny = size(M)
+
+    Mnew = similar(M)
+
+    for j in 2:Ny-1, i in 2:Nx-1
+        Mnew[i,j] = 5*M[i,j] - (M[i-1,j] + M[i+1,j] + M[i,j-1] + M[i,j+1])
+    end
+
+    for i in 2:Nx-1
+        Mnew[i,1] = 5*M[i,1] - (M[i-1,1] + M[i+1,1] + M[i,2] + Mnew[i,1])
+        Mnew[i,end] = 5*M[i,end] - (M[i-1,1] + M[i+1,1] + M[i,end-1] +  Mnew[i,end])
+    end
+
+    for j in 2:Ny-1
+        Mnew[1,j] = 5*M[1,j] - (M[2,j] + M[1,j-1] + M[1,j+1] + Mnew[1,j])
+        Mnew[end,j] = 5*M[end,j] - (M[end-1,j] + M[end,j-1] + M[end,j+1] + Mnew[end,j])
+    end
+
+    Mnew[1,1] = 5*M[1,1] - (M[2,1] + M[1,2] + 2*M[1,1])
+    Mnew[1,end] = 5*M[1,end] - (M[2,end] + M[1,end-1] + 2*M[1,end])
+    Mnew[end,1] = 5*M[end,1] - (M[end-1,1] + M[end,2]+ 2*M[end,1])
+    Mnew[end,end] = 5*M[end,end] - (M[end-1,end] + M[end,end-1] +  + 2*M[end,end])
+
+    return Mnew
+end
+
+P_conv = convolution_img(P_orig) # 1. Convolution
+P_conv = convolution_img(P_conv) # 2. Convolution
+heatmap(P_conv, title="Convolution of image")
+```

@@ -127,3 +127,30 @@ for i=1:N_diff
     M_blurr = M_blurr + η*diffusion2d(M_blurr,dx,dy)
 end
 ```
+
+## Image processing
+Finally, we apply the diffusion on our apple image.
+
+```julia
+using Images
+# This image is taken from: https://openmoji.org/ 
+# See: https://openmoji.org/library/emoji-1F34F/
+img = load("images/1F34F_color.png");
+Npx, Npy = size(img)
+
+P = channelview(Gray.(img)) + zeros(Npx, Npy)
+P_diff2d = diffusion2d(P,1,1)
+heatmap(P, title="Original image")
+heatmap(P_diff2d, title="Diffusion of image")
+
+# Blurring
+iter_blur = 1000;
+P_new = copy(P)
+for i=1:iter_blur
+    P_new = P_new + 0.1 * diffusion2d(P_new,1,1)
+end
+
+blur_title = string("Blurring after n=", iter_blur, " iterations")
+heatmap(P_new, title=blur_title)
+```
+

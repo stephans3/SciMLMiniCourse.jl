@@ -91,15 +91,16 @@ Npx, Npy = size(img)
 
 P = channelview(Gray.(img)) + zeros(Npx, Npy)
 P_diff2d = diffusion2d(P,1,1)
-heatmap(P)
-heatmap(P_diff2d)
+heatmap(P, title="Original image")
+heatmap(P_diff2d, title="Diffusion of image")
 
 # Blurring
-M = 1000;
+iter_blur = 10;
 P_new = copy(P)
-for i=1:M
+for i=1:iter_blur
     P_new = P_new + 0.1 * diffusion2d(P_new,1,1)
 end
 
-heatmap(P_new)
+blur_title = string("Blurring after n=", iter_blur, " iterations")
+heatmap(P_new, title=blur_title)
 
