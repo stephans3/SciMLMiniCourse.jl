@@ -1,4 +1,4 @@
-# Quick introduction to Julia
+# Quick introduction
 
 When you installed the Julia environment on your PC, please open the Julia executive. The REPL will show you something like
 ```julia
